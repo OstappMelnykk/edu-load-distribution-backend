@@ -1,4 +1,4 @@
-type SubjectUpdateDTO = {
-    name?: string; 
+export type SubjectUpdateDTO = {
+    name?: string;
     hours?: number;
 };

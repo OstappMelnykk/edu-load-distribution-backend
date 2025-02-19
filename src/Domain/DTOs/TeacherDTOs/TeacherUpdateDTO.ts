@@ -1,4 +1,4 @@
-type TeacherUpdateDTO = {
+export type TeacherUpdateDTO = {
     firstName?: string;
     lastName?: string;
     middleName?: string;

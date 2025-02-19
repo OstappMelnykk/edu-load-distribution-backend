@@ -1,4 +1,4 @@
-type TeacherCreateDTO = {
+export type TeacherCreateDTO = {
     firstName: string;
     lastName: string;
     middleName: string;

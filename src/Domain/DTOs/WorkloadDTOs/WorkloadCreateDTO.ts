@@ -1,6 +1,6 @@
 import {Types} from "mongoose";
 
-type WorkloadCreateDTO = {
+export type WorkloadCreateDTO = {
     teacherId: Types.ObjectId;
     subjectId: Types.ObjectId;
     groupNumber: string;
