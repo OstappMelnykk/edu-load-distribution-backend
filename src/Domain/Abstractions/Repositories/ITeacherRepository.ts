@@ -4,15 +4,15 @@ import {TeacherCreateDTO} from "../../DTOs/TeacherDTOs/TeacherCreateDTO";
 import {TeacherUpdateDTO} from "../../DTOs/TeacherDTOs/TeacherUpdateDTO";
 
 export interface ITeacherRepository {
-    getAllTeachers(): Promise<Teacher[]>;
+    GetAll(): Promise<Teacher[]>;
 
-    getTeacherById(id: Types.ObjectId): Promise<Teacher>;
+    GetById(id: Types.ObjectId): Promise<Teacher>;
 
-    createTeacher(teacherCreateDTO: TeacherCreateDTO): Promise<Types.ObjectId>;
+    Create(teacherCreateDTO: TeacherCreateDTO): Promise<Types.ObjectId>;
 
-    updateTeacher(id: Types.ObjectId, teacherUpdateDTO: TeacherUpdateDTO): Promise<Types.ObjectId>;
+    Update(id: Types.ObjectId, teacherUpdateDTO: TeacherUpdateDTO): Promise<Types.ObjectId>;
 
-    deleteAllTeachers(): Promise<string>;
+    DeleteAll(): Promise<string>;
 
-    deleteTeacherById(id: Types.ObjectId): Promise<Types.ObjectId>;
+    DeleteById(id: Types.ObjectId): Promise<Types.ObjectId>;
 }
