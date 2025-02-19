@@ -1,12 +1,13 @@
+import { Types } from 'mongoose';
 export class Subject {
 
     constructor(
-        private _id: number,
+        private _id: Types.ObjectId,
         private _name: string,
         private _hours: number
     ) { }
 
-    public static Create( id: number,
+    public static Create( id: Types.ObjectId,
                    name: string,
                    hours: number
     ): { instance: Subject | null, error: string }

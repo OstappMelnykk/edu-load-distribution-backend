@@ -1,18 +1,19 @@
 import {Subject} from "./Subject";
 import {Teacher} from "./Teacher";
+import {Types} from "mongoose";
 
 export class Workload {
     constructor(
-        private _id: number,
+        private _id: Types.ObjectId,
         private _teacher: Teacher,
         private _subject: Subject,
         private _groupNumber: string,
     ) {}
 
-    public static Create( id: number,
-                   teacher: Teacher,
-                   subject: Subject,
-                   groupNumber: string
+    public static Create( id: Types.ObjectId,
+                          teacher: Teacher,
+                          subject: Subject,
+                          groupNumber: string
     ): { instance: Workload | null, error: string }
     {
         let error: string = ""

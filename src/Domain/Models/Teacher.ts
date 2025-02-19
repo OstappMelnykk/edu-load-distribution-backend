@@ -1,7 +1,9 @@
+import {Types} from "mongoose";
+
 export class Teacher {
 
     constructor(
-        private _id: number,
+        private _id: Types.ObjectId,
         private _firstName: string,
         private _lastName: string,
         private _middleName: string,
@@ -10,13 +12,13 @@ export class Teacher {
         private _experience: number
     ) { }
 
-    public static Create( id: number,
-                   firstName: string,
-                   lastName: string,
-                   middleName: string,
-                   degree: string,
-                   position: string,
-                   experience: number
+    public static Create( id: Types.ObjectId,
+                          firstName: string,
+                          lastName: string,
+                          middleName: string,
+                          degree: string,
+                          position: string,
+                          experience: number
     ): { instance: Teacher | null, error: string }
     {
         let error: string = ""
