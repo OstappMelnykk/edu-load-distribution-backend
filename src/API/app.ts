@@ -4,7 +4,8 @@ import cors from "cors"
 
 dotenv.config();
 
-const port: number = 3000;
+
+/*const port: number = 3000;*/
 
 class App {
     private app: Express;
@@ -20,8 +21,8 @@ class App {
     public init = async () => {
 
         try {
-            this.app.listen(port, () => {
-                console.log(`Server running on port: ${port}`);
+            this.app.listen(process.env.API_PORT, () => {
+                console.log(`Server running on port: ${process.env.API_PORT}`);
             })
             this.app.get("/", (req, res) => {
                 res.send("Hello World! with express and typescript");
