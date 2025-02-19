@@ -1,5 +1,6 @@
 import { Types } from 'mongoose';
-export class Subject {
+
+export class SubjectModel {
 
     constructor(
         private _id: Types.ObjectId,
@@ -10,7 +11,7 @@ export class Subject {
     public static Create( id: Types.ObjectId,
                    name: string,
                    hours: number
-    ): { instance: Subject | null, error: string }
+    ): { instance: SubjectModel | null, error: string }
     {
         let error: string = ""
 
@@ -20,7 +21,7 @@ export class Subject {
         if (error) return { instance: null, error: error };
 
         return {
-            instance: new Subject(id, name, hours),
+            instance: new SubjectModel(id, name, hours),
             error: error
         }
     }

@@ -1,6 +1,6 @@
 import {Types} from "mongoose";
 
-export class Teacher {
+export class TeacherModel {
 
     constructor(
         private _id: Types.ObjectId,
@@ -19,7 +19,7 @@ export class Teacher {
                           degree: string,
                           position: string,
                           experience: number
-    ): { instance: Teacher | null, error: string }
+    ): { instance: TeacherModel | null, error: string }
     {
         let error: string = ""
 
@@ -34,7 +34,7 @@ export class Teacher {
 
         return {
             instance:
-                new Teacher( id,
+                new TeacherModel( id,
                              firstName,
                              lastName,
                              middleName,
