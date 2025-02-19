@@ -23,9 +23,9 @@ export class Teacher {
     {
         let error: string = ""
 
-        if (!firstName || firstName.length < 2 || firstName.length > 250) error += "FirstName is not correct!\n";
-        if (!lastName || lastName.length < 2 || lastName.length > 250) error += "LastName is not correct!\n";
-        if (!middleName || middleName.length < 2 || middleName.length > 250) error += "MiddleName is not correct!\n";
+        if (!firstName || firstName.length < 2 || firstName.length > 30) error += "FirstName is not correct!\n";
+        if (!lastName || lastName.length < 2 || lastName.length > 30) error += "LastName is not correct!\n";
+        if (!middleName || middleName.length < 2 || middleName.length > 30) error += "MiddleName is not correct!\n";
         if (!degree ) error += "Degree is not correct!\n";
         if (!position) error += "Position is not correct!\n";
         if (!experience || experience < 0 || experience > 70) error += "Experience is not correct!\n";

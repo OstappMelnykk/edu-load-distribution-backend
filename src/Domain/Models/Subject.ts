@@ -14,7 +14,7 @@ export class Subject {
     {
         let error: string = ""
 
-        if (!name || name.length < 1 || name.length > 250) error += "Name is not correct!\n";
+        if (!name || name.length < 1 || name.length > 50) error += "Name is not correct!\n";
         if (!hours || hours < 0 || isNaN(hours)) error += "Hours is not correct!\n";
 
         if (error) return { instance: null, error: error };
