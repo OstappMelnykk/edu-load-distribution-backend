@@ -1,11 +1,12 @@
 import express, { Express } from "express"
 import dotenv from "dotenv"
 import cors from "cors"
+import connectDB from "../DataAccess/dbConnection";
+import subjectRoutes from "./Routes/subjectRoutes";
+import teacherRoutes from "./Routes/teacherRoutes";
+import workloadRoutes from "./Routes/workloadRoutes";
 
 dotenv.config();
-
-
-/*const port: number = 3000;*/
 
 class App {
     private app: Express;
@@ -21,12 +22,16 @@ class App {
     public init = async () => {
 
         try {
+            await connectDB();
+
             this.app.listen(process.env.API_PORT, () => {
                 console.log(`Server running on port: ${process.env.API_PORT}`);
             })
-            this.app.get("/", (req, res) => {
-                res.send("Hello World! with express and typescript");
-            })
+
+            this.app.use("/subject", subjectRoutes);
+            this.app.use("/teacher", teacherRoutes);
+            this.app.use("/workload", workloadRoutes);
+
         } catch (error: unknown) {
             const err = error as Error;
             console.log(err.message);
