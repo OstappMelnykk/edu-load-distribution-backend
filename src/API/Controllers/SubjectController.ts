@@ -2,12 +2,14 @@ import { Request, Response } from 'express';
 import {SubjectService} from "../../Application/Services/SubjectService";
 import {ISubjectResponse} from "../Contracts/ISubjectResponse";
 import {SubjectRepository} from "../../DataAccess/Repositories/SubjectRepository";
+import {container, singleton} from "tsyringe";
 
+@singleton()
 class SubjectController {
     private readonly _subjectService: SubjectService;
 
-    constructor(subjectService: SubjectService) {
-        this._subjectService =  subjectService
+    constructor() {
+        this._subjectService = container.resolve(SubjectService);
     }
 
     public getAllSubjects = async (req: Request, res: Response) => {
@@ -28,4 +30,4 @@ class SubjectController {
     }
 }
 
-export default new SubjectController(new SubjectService(new SubjectRepository()));
+export default container.resolve(SubjectController);

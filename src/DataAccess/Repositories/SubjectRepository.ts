@@ -6,8 +6,9 @@ import {ISubjectEntity} from "../Entities/SubjectEntity";
 import { SubjectModel } from "../../Domain/Models/SubjectModel";
 import {Subject} from "../Schemas/Subject";
 import {SubjectMapper} from "../Mappers/SubjectMapper";
+import {injectable} from "tsyringe";
 
-
+@injectable()
 export class SubjectRepository implements ISubjectRepository {
     async GetAll(): Promise<SubjectModel[]> {
         const subjectEntities: ISubjectEntity[] = await Subject.find();

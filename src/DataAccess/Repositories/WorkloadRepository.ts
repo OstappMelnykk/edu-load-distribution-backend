@@ -6,8 +6,10 @@ import {WorkloadModel} from "../../Domain/Models/WorkloadModel";
 import {Workload} from "../Schemas/Workload";
 import {IWorkloadEntity} from "../Entities/WorkloadEntity";
 import {WorkloadMapper} from "../Mappers/WorkloadMapper";
+import {injectable} from "tsyringe";
 
 
+@injectable()
 export class WorkloadRepository implements IWorkloadRepository {
     async GetAll(): Promise<WorkloadModel[]> {
         const workloadEntities: IWorkloadEntity[] = await Workload.find();

@@ -4,12 +4,16 @@ import {WorkloadCreateDTO} from "../../Domain/DTOs/WorkloadDTOs/WorkloadCreateDT
 import {WorkloadUpdateDTO} from "../../Domain/DTOs/WorkloadDTOs/WorkloadUpdateDTO";
 import {WorkloadModel} from "../../Domain/Models/WorkloadModel";
 import {IWorkloadRepository} from "../../Domain/Abstractions/Repositories/IWorkloadRepository";
+import {inject, injectable} from "tsyringe";
+import {TeacherRepository} from "../../DataAccess/Repositories/TeacherRepository";
+import {WorkloadRepository} from "../../DataAccess/Repositories/WorkloadRepository";
 
+@injectable()
 export class WorkloadService implements IWorkloadService {
 
     private readonly _workloadRepository: IWorkloadRepository;
 
-    public constructor(workloadRepository: IWorkloadRepository) {
+    public constructor(@inject(WorkloadRepository) workloadRepository: IWorkloadRepository) {
         this._workloadRepository = workloadRepository;
     }
 

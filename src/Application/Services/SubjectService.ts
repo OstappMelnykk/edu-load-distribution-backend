@@ -4,13 +4,15 @@ import {SubjectCreateDTO} from "../../Domain/DTOs/SubjectDTOs/SubjectCreateDTO";
 import {SubjectUpdateDTO} from "../../Domain/DTOs/SubjectDTOs/SubjectUpdateDTO";
 import {SubjectModel} from "../../Domain/Models/SubjectModel";
 import {ISubjectRepository} from "../../Domain/Abstractions/Repositories/ISubjectRepository";
+import {inject, injectable} from "tsyringe";
+import {SubjectRepository} from "../../DataAccess/Repositories/SubjectRepository";
 
-
+@injectable()
 export class SubjectService implements ISubjectService {
 
     private readonly _subjectRepository: ISubjectRepository;
 
-    public constructor(subjectRepository: ISubjectRepository) {
+    public constructor(@inject(SubjectRepository) subjectRepository: ISubjectRepository) {
         this._subjectRepository = subjectRepository;
     }
 

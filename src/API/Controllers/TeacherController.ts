@@ -3,12 +3,15 @@ import {TeacherService} from "../../Application/Services/TeacherService";
 import {ITeacherResponse} from "../Contracts/ITeacherResponse";
 import {TeacherModel} from "../../Domain/Models/TeacherModel";
 import {TeacherRepository} from "../../DataAccess/Repositories/TeacherRepository";
+import {container, singleton} from "tsyringe";
+import {SubjectService} from "../../Application/Services/SubjectService";
 
+@singleton()
 class TeacherController {
     private readonly _teacherService: TeacherService;
 
-    constructor(teacherService: TeacherService) {
-        this._teacherService =  teacherService
+    constructor() {
+        this._teacherService = container.resolve(TeacherService)
     }
 
     public getAllTeachers = async (req: Request, res: Response) => {
@@ -33,4 +36,4 @@ class TeacherController {
     }
 }
 
-export default new TeacherController(new TeacherService(new TeacherRepository()));
+export default container.resolve(TeacherController)

@@ -3,16 +3,18 @@ import {IWorkloadResponse} from "../Contracts/IWorkloadResponse";
 import {WorkloadService} from "../../Application/Services/WorkloadService";
 import {WorkloadModel} from "../../Domain/Models/WorkloadModel";
 import {WorkloadRepository} from "../../DataAccess/Repositories/WorkloadRepository";
+import {container, singleton} from "tsyringe";
+import {TeacherService} from "../../Application/Services/TeacherService";
 
+@singleton()
 class WorkloadController {
     private readonly _workloadService: WorkloadService;
 
-    constructor(workloadService: WorkloadService) {
-        this._workloadService =  workloadService
+    constructor() {
+        this._workloadService = container.resolve(WorkloadService)
     }
 
     public getAllWorkloads = async (req: Request, res: Response) => {
-        console.log("Getting all workloads");
         try {
             const workloads: WorkloadModel[]  = await this._workloadService.getAllWorkloads()
 
@@ -32,4 +34,4 @@ class WorkloadController {
     }
 }
 
-export default new WorkloadController(new WorkloadService(new WorkloadRepository()));
+export default container.resolve(WorkloadController);

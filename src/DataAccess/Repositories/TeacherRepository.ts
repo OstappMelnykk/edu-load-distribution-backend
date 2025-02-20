@@ -6,7 +6,10 @@ import {TeacherModel} from "../../Domain/Models/TeacherModel";
 import {ITeacherEntity} from "../Entities/TeacherEntity";
 import {Teacher} from "../Schemas/Teacher";
 import {TeacherMapper} from "../Mappers/TeacherMapper";
+import {injectable} from "tsyringe";
 
+
+@injectable()
 export class TeacherRepository implements ITeacherRepository {
     async GetAll(): Promise<TeacherModel[]> {
         const teacherEntities: ITeacherEntity[] = await Teacher.find();

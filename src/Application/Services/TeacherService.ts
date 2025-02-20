@@ -4,12 +4,15 @@ import {TeacherCreateDTO} from "../../Domain/DTOs/TeacherDTOs/TeacherCreateDTO";
 import {TeacherUpdateDTO} from "../../Domain/DTOs/TeacherDTOs/TeacherUpdateDTO";
 import {TeacherModel} from "../../Domain/Models/TeacherModel";
 import {ITeacherRepository} from "../../Domain/Abstractions/Repositories/ITeacherRepository";
+import {inject, injectable} from "tsyringe";
+import {TeacherRepository} from "../../DataAccess/Repositories/TeacherRepository";
 
+@injectable()
 export class TeacherService implements ITeacherService {
 
     private readonly _teacherRepository: ITeacherRepository;
 
-    public constructor(teacherRepository: ITeacherRepository) {
+    public constructor(@inject(TeacherRepository) teacherRepository: ITeacherRepository) {
         this._teacherRepository = teacherRepository;
     }
 
