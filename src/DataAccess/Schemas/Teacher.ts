@@ -1,6 +1,7 @@
 import { Schema, model, Types } from 'mongoose';
+import {ITeacherEntity} from "../Entities/TeacherEntity";
 
-const TeacherSchema = new Schema({
+const TeacherSchema = new Schema<ITeacherEntity>({
     firstName: {
         type: String,
         required: true,
@@ -37,5 +38,5 @@ const TeacherSchema = new Schema({
     }
 });
 
-const Teacher = model('Teacher', TeacherSchema);
+const Teacher = model<ITeacherEntity>('Teacher', TeacherSchema);
 export { Teacher };

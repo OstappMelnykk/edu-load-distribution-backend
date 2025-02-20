@@ -1,6 +1,7 @@
 import { Schema, model, Types } from 'mongoose';
+import {ISubjectEntity} from "../Entities/SubjectEntity";
 
-const SubjectSchema = new Schema({
+const SubjectSchema = new Schema<ISubjectEntity>({
     name: {
         type: String,
         required: true,
@@ -14,5 +15,5 @@ const SubjectSchema = new Schema({
     }
 });
 
-const Subject = model('Subject', SubjectSchema);
+const Subject = model<ISubjectEntity>('Subject', SubjectSchema);
 export { Subject };

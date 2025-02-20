@@ -1,15 +1,15 @@
 import { Schema, model, Types } from 'mongoose';
-import { Teacher } from './Teacher';
-import { Subject } from './Subject';
+import {IWorkloadEntity} from "../Entities/WorkloadEntity";
 
-const WorkloadSchema = new Schema({
-    teacher: {
-        type: Types.ObjectId,
+
+const WorkloadSchema = new Schema<IWorkloadEntity>({
+    teacherId: {
+        type: Schema.Types.ObjectId,
         ref: 'Teacher',
         required: true
     },
-    subject: {
-        type: Types.ObjectId,
+    subjectId: {
+        type: Schema.Types.ObjectId,
         ref: 'Subject',
         required: true
     },
@@ -21,5 +21,5 @@ const WorkloadSchema = new Schema({
     }
 });
 
-const Workload = model('Workload', WorkloadSchema);
+const Workload = model<IWorkloadEntity>('Workload', WorkloadSchema);
 export { Workload };
