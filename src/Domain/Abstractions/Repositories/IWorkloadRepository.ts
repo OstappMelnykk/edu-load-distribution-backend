@@ -1,12 +1,12 @@
-import {Workload} from "../../Models/Workload";
+import {WorkloadModel} from "../../Models/WorkloadModel";
 import {Types} from "mongoose";
 import {WorkloadCreateDTO} from "../../DTOs/WorkloadDTOs/WorkloadCreateDTO";
 import {WorkloadUpdateDTO} from "../../DTOs/WorkloadDTOs/WorkloadUpdateDTO";
 
 export interface IWorkloadRepository {
-    GetAll(): Promise<Workload[]>;
+    GetAll(): Promise<WorkloadModel[]>;
 
-    GetById(id: Types.ObjectId): Promise<Workload>;
+    GetById(id: Types.ObjectId): Promise<WorkloadModel | null>;
 
     Create(workloadCreateDTO: WorkloadCreateDTO): Promise<Types.ObjectId>;
 

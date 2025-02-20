@@ -1,12 +1,13 @@
-import {Subject} from "../../Models/Subject";
+import {SubjectModel} from "../../Models/SubjectModel";
 import {Types} from "mongoose";
 import {SubjectCreateDTO} from "../../DTOs/SubjectDTOs/SubjectCreateDTO";
 import {SubjectUpdateDTO} from "../../DTOs/SubjectDTOs/SubjectUpdateDTO";
 
 export interface ISubjectRepository {
-    GetAll(): Promise<Subject[]>;
 
-    GetById(id: Types.ObjectId): Promise<Subject>;
+    GetAll(): Promise<SubjectModel[]>;
+
+    GetById(id: Types.ObjectId): Promise<SubjectModel | null>;
 
     Create(subjectCreateDTO: SubjectCreateDTO): Promise<Types.ObjectId>;
 
