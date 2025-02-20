@@ -4,12 +4,15 @@ import {IWorkloadEntity} from "../Entities/WorkloadEntity";
 
 export class WorkloadMapper {
 
-    public static EntityToDomain(subjectEntity: IWorkloadEntity): WorkloadModel{
+    public static EntityToDomain(workloadEntity: IWorkloadEntity): WorkloadModel{
+        console.log(workloadEntity.teacherId,)
+        console.log(workloadEntity.subjectId,)
+
         const { instance, error } = WorkloadModel.Create(
-            subjectEntity._id as Types.ObjectId,
-            subjectEntity.teacherId,
-            subjectEntity.subjectId,
-            subjectEntity.groupNumber,
+            workloadEntity._id as Types.ObjectId,
+            workloadEntity.teacherId,
+            workloadEntity.subjectId,
+            workloadEntity.groupNumber,
         );
 
         if (error) throw new Error(error);
@@ -17,12 +20,12 @@ export class WorkloadMapper {
         return instance as WorkloadModel;
     }
 
-    public static DomainToEntity(subjectModel: WorkloadModel): IWorkloadEntity {
+    public static DomainToEntity(workloadModel: WorkloadModel): IWorkloadEntity {
         return {
-            _id: subjectModel.id,
-            teacherId: subjectModel.teacher,
-            subjectId: subjectModel.subject,
-            groupNumber: subjectModel.groupNumber,
+            _id: workloadModel.id,
+            teacherId: workloadModel.teacherId,
+            subjectId: workloadModel.subjectId,
+            groupNumber: workloadModel.groupNumber,
         } as IWorkloadEntity;
     }
 
