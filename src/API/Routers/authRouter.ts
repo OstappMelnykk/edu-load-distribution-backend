@@ -37,17 +37,79 @@ router.get('/get', roleMiddleware(['USER', 'ADMIN']), (req, res) => {
     container.resolve(AuthController).getAllUsers(req, res);
 });
 
+/**
+ * @swagger
+ * /auth/me/workloads:
+ *   get:
+ *     summary: Get current user's workloads
+ *     description: Retrieves the workloads of the currently authenticated user, including details about the teacher and the subject.
+ *     tags:
+ *       - Me
+ *     security:
+ *       - BearerAuth: []
+ *     responses:
+ *       200:
+ *         description: A list of workloads for the current user, including teacher and subject details.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   _id:
+ *                     type: string
+ *                   teacherId:
+ *                     type: object
+ *                     properties:
+ *                       _id:
+ *                         type: string
+ *                       firstName:
+ *                         type: string
+ *                       lastName:
+ *                         type: string
+ *                       middleName:
+ *                         type: string
+ *                       degree:
+ *                         type: string
+ *                         enum: ['degree_1', 'degree_2', 'degree_3', 'degree_4', 'degree_5']
+ *                       position:
+ *                         type: string
+ *                         enum: ['position_1', 'position_2', 'position_3', 'position_4', 'position_5']
+ *                       experience:
+ *                         type: number
+ *                   subjectId:
+ *                     type: object
+ *                     properties:
+ *                       _id:
+ *                         type: string
+ *                       name:
+ *                         type: string
+ *                       hours:
+ *                         type: number
+ *                   groupNumber:
+ *                     type: string
+ *       400:
+ *         description: Error retrieving workloads for the current user.
+ *       401:
+ *         description: Unauthorized access.
+ *       500:
+ *         description: Internal server error.
+ */
+router.get('/me/workloads', roleMiddleware(['USER', 'ADMIN']), (req, res) => {
+    container.resolve(AuthController).getCurrentUserWorkloads(req, res);
+});
 
 
 
 /**
  * @swagger
- * /auth/get/currentUser:
+ * /auth/me:
  *   get:
  *     summary: Get the current authenticated user
  *     description: Retrieves the profile of the currently authenticated user.
  *     tags:
- *       - CurrentUser
+ *       - Me
  *     security:
  *       - BearerAuth: []
  *     responses:
@@ -93,12 +155,11 @@ router.get('/get', roleMiddleware(['USER', 'ADMIN']), (req, res) => {
  *       500:
  *         description: Internal server error.
  */
-router.get('/get/currentUser', roleMiddleware(['ADMIN', 'USER']), currentUserMiddleware, async (req: Request, res: Response): Promise<void> => {
+router.get('/me', roleMiddleware(['ADMIN', 'USER']), currentUserMiddleware, async (req: Request, res: Response): Promise<void> => {
     if (!req.user) {
         res.status(404).json({ message: 'User not found' });
         return;
     }
-
 
     res.json({ user: req.user }); // Відправляємо відповідь
 });

@@ -17,6 +17,8 @@ import jwt from 'jsonwebtoken';
 import {UserModel} from "../../Domain/Models/UserModel";
 import {IUserResponse} from "../Contracts/IUserResponse";
 import dotenv from "dotenv";
+import {Workload} from "../../DataAccess/Schemas/Workload";
+import {IWorkload} from "../Contracts/IWorkload";
 
 dotenv.config();
 
@@ -55,6 +57,54 @@ class AuthController {
             }));
 
             res.send(responce);
+        }
+        catch (error) {
+            const err = error as Error;
+            res.send(err.message);
+        }
+    }
+
+
+
+    public getCurrentUserWorkloads = async (req: Request, res: Response) => {
+        try {
+
+            const currentUser = req.user
+            let currentTeacherId = currentUser.teacherId
+
+            const workloads: IWorkload[] = await Workload.aggregate([
+                {
+                    $match: {
+                        teacherId: new Types.ObjectId(currentTeacherId)
+                    }
+                },
+                {
+                    $lookup: {
+                        from: 'teachers',
+                        localField: 'teacherId',
+                        foreignField: '_id',
+                        as: 'teacherId'
+                    }
+                },
+                {
+                    $lookup: {
+                        from: 'subjects',
+                        localField: 'subjectId',
+                        foreignField: '_id',
+                        as: 'subjectId'
+                    }
+                },
+                {
+                    $unwind: '$teacherId'
+                },
+                {
+                    $unwind: '$subjectId'
+                }
+            ]).exec();
+
+
+
+            res.send(workloads);
         }
         catch (error) {
             const err = error as Error;
