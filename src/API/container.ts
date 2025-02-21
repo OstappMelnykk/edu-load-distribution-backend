@@ -7,17 +7,24 @@ import { TeacherService } from "../Application/Services/TeacherService";
 import { WorkloadRepository } from "../DataAccess/Repositories/WorkloadRepository";
 import { WorkloadService } from "../Application/Services/WorkloadService";
 import SubjectController from "./Controllers/SubjectController";
+import AuthController from "./Controllers/AuthController";
+import TeacherController from "./Controllers/TeacherController";
+import WorkloadController from "./Controllers/WorkloadController";
 
 container.registerSingleton<SubjectRepository>(SubjectRepository);
 container.registerSingleton<SubjectService>(SubjectService);
+container.registerSingleton<SubjectController>(SubjectController);
 
 container.registerSingleton<TeacherRepository>(TeacherRepository);
 container.registerSingleton<TeacherService>(TeacherService);
+container.registerSingleton<TeacherController>(TeacherController);
 
 container.registerSingleton<WorkloadRepository>(WorkloadRepository);
 container.registerSingleton<WorkloadService>(WorkloadService);
+container.registerSingleton<WorkloadController>(WorkloadController);
 
-container.registerSingleton<SubjectController>(SubjectController);
+container.registerSingleton<AuthController>(AuthController);
+
 
 //scoped
 //container.register(SubjectController, { useClass: SubjectController });
