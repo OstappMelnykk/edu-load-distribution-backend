@@ -2,7 +2,7 @@ import { Types } from "mongoose";
 import {ISubjectRepository} from "../../Domain/Abstractions/Repositories/ISubjectRepository";
 import {SubjectCreateDTO} from "../../Domain/DTOs/SubjectDTOs/SubjectCreateDTO";
 import {SubjectUpdateDTO} from "../../Domain/DTOs/SubjectDTOs/SubjectUpdateDTO";
-import {ISubjectEntity} from "../Entities/SubjectEntity";
+import {ISubjectEntity} from "../Entities/ISubjectEntity";
 import { SubjectModel } from "../../Domain/Models/SubjectModel";
 import {Subject} from "../Schemas/Subject";
 import {SubjectMapper} from "../Mappers/SubjectMapper";

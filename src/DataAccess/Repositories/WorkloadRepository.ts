@@ -4,7 +4,7 @@ import {WorkloadCreateDTO} from "../../Domain/DTOs/WorkloadDTOs/WorkloadCreateDT
 import {WorkloadUpdateDTO} from "../../Domain/DTOs/WorkloadDTOs/WorkloadUpdateDTO";
 import {WorkloadModel} from "../../Domain/Models/WorkloadModel";
 import {Workload} from "../Schemas/Workload";
-import {IWorkloadEntity} from "../Entities/WorkloadEntity";
+import {IWorkloadEntity} from "../Entities/IWorkloadEntity";
 import {WorkloadMapper} from "../Mappers/WorkloadMapper";
 import {injectable} from "tsyringe";
 

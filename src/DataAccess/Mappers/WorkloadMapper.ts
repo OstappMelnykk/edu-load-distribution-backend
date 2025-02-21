@@ -1,6 +1,6 @@
 import {Types} from "mongoose";
 import {WorkloadModel} from "../../Domain/Models/WorkloadModel";
-import {IWorkloadEntity} from "../Entities/WorkloadEntity";
+import {IWorkloadEntity} from "../Entities/IWorkloadEntity";
 
 export class WorkloadMapper {
 

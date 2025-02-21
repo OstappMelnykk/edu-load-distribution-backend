@@ -1,6 +1,6 @@
 
 import {Types} from "mongoose";
-import {ITeacherEntity} from "../Entities/TeacherEntity";
+import {ITeacherEntity} from "../Entities/ITeacherEntity";
 import {TeacherModel} from "../../Domain/Models/TeacherModel";
 
 export class TeacherMapper {

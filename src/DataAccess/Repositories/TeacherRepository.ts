@@ -3,7 +3,7 @@ import {ITeacherRepository} from "../../Domain/Abstractions/Repositories/ITeache
 import {TeacherCreateDTO} from "../../Domain/DTOs/TeacherDTOs/TeacherCreateDTO";
 import {TeacherUpdateDTO} from "../../Domain/DTOs/TeacherDTOs/TeacherUpdateDTO";
 import {TeacherModel} from "../../Domain/Models/TeacherModel";
-import {ITeacherEntity} from "../Entities/TeacherEntity";
+import {ITeacherEntity} from "../Entities/ITeacherEntity";
 import {Teacher} from "../Schemas/Teacher";
 import {TeacherMapper} from "../Mappers/TeacherMapper";
 import {injectable} from "tsyringe";

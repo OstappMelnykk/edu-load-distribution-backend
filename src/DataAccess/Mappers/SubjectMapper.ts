@@ -1,6 +1,6 @@
 
 import {SubjectModel} from "../../Domain/Models/SubjectModel";
-import {ISubjectEntity} from "../Entities/SubjectEntity";
+import {ISubjectEntity} from "../Entities/ISubjectEntity";
 import {Types} from "mongoose";
 
 export class SubjectMapper {

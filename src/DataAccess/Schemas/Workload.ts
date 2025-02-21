@@ -1,5 +1,5 @@
 import { Schema, model, Types } from 'mongoose';
-import {IWorkloadEntity} from "../Entities/WorkloadEntity";
+import {IWorkloadEntity} from "../Entities/IWorkloadEntity";
 
 
 const WorkloadSchema = new Schema<IWorkloadEntity>({
