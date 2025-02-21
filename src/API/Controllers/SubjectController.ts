@@ -18,7 +18,7 @@ export class SubjectController {
 
     public async getAllSubjects (req: Request, res: Response) {
         try {
-            const subjects  = await this._subjectService.getAllSubjects()
+            const subjects: SubjectModel[]  = await this._subjectService.getAllSubjects()
             var responce: ISubjectResponse[] = subjects.map(subject => ({
                 id: subject.id,
                 name: subject.name,
