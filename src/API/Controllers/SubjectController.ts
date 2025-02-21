@@ -6,14 +6,15 @@ import {Types} from "mongoose";
 import {SubjectModel} from "../../Domain/Models/SubjectModel";
 import {SubjectCreateDTO} from "../../Domain/DTOs/SubjectDTOs/SubjectCreateDTO";
 import {SubjectUpdateDTO} from "../../Domain/DTOs/SubjectDTOs/SubjectUpdateDTO";
+import {ISubjectService} from "../../Domain/Abstractions/Services/ISubjectService";
 
 
 @injectable()
 export class SubjectController {
 
-    private readonly _subjectService: SubjectService;
+    private readonly _subjectService: ISubjectService;
 
-    constructor(@inject(SubjectService) subjectService: SubjectService) {
+    constructor(@inject(SubjectService) subjectService: ISubjectService) {
         this._subjectService = subjectService
     }
 

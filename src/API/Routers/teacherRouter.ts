@@ -1,4 +1,4 @@
-import express from "express";
+import express, {Request, Response} from "express";
 import TeacherController from "../Controllers/TeacherController";
 
 import {container} from "tsyringe";
@@ -39,7 +39,7 @@ const router = express.Router();
  *       500:
  *         description: Internal server error
  */
-router.get('/get', (req, res) => {
+router.get('/get', (req: Request, res: Response) => {
     container.resolve(TeacherController).getAllTeachers(req, res);
 });
 
@@ -83,7 +83,7 @@ router.get('/get', (req, res) => {
  *       500:
  *         description: Internal server error
  */
-router.get('/get/:id', (req, res) => {
+router.get('/get/:id', (req: Request, res: Response) => {
     container.resolve(TeacherController).getTeacherById(req, res);
 });
 
@@ -131,7 +131,7 @@ router.get('/get/:id', (req, res) => {
  *       500:
  *         description: Internal server error
  */
-router.post('/create', (req, res) => {
+router.post('/create', (req: Request, res: Response) => {
     container.resolve(TeacherController).createTeacher(req, res);
 });
 
@@ -186,7 +186,7 @@ router.post('/create', (req, res) => {
  *       500:
  *         description: Internal server error
  */
-router.put('/update/:id', (req, res) => {
+router.put('/update/:id', (req: Request, res: Response) => {
     container.resolve(TeacherController).updateTeacher(req, res);
 });
 
@@ -202,7 +202,7 @@ router.put('/update/:id', (req, res) => {
  *       500:
  *         description: Internal server error
  */
-router.delete('/delete', (req, res) => {
+router.delete('/delete', (req: Request, res: Response) => {
     container.resolve(TeacherController).deleteAllTeachers(req, res);
 });
 
@@ -232,7 +232,7 @@ router.delete('/delete', (req, res) => {
  *       500:
  *         description: Internal server error
  */
-router.delete('/delete/:id', (req, res) => {
+router.delete('/delete/:id', (req: Request, res: Response) => {
     container.resolve(TeacherController).deleteTeacherById(req, res);
 });
 

@@ -1,4 +1,4 @@
-import express from "express";
+import express, {Request, Response} from "express";
 import SubjectController from "../Controllers/SubjectController";
 import {container} from "tsyringe";
 const router = express.Router();
@@ -28,7 +28,7 @@ const router = express.Router();
  *       500:
  *         description: Internal server error
  */
-router.get('/get', (req, res) => {
+router.get('/get', (req: Request, res: Response) => {
     container.resolve(SubjectController).getAllSubjects(req, res);
 });
 
@@ -66,7 +66,7 @@ router.get('/get', (req, res) => {
  *       500:
  *         description: Internal server error
  */
-router.get('/get/:id', (req, res) => {
+router.get('/get/:id', (req: Request, res: Response) => {
     container.resolve(SubjectController).getSubjectById(req, res);
 });
 
@@ -105,7 +105,7 @@ router.get('/get/:id', (req, res) => {
  *       500:
  *         description: Internal server error
  */
-router.post('/create', (req, res) => {
+router.post('/create', (req: Request, res: Response) => {
     container.resolve(SubjectController).createSubject(req, res);
 });
 
@@ -151,7 +151,7 @@ router.post('/create', (req, res) => {
  *       500:
  *         description: Internal server error
  */
-router.put('/update/:id', (req, res) => {
+router.put('/update/:id', (req: Request, res: Response) => {
     container.resolve(SubjectController).updateSubject(req, res);
 });
 
@@ -203,7 +203,7 @@ router.delete('/delete', (req, res) => {
  *       500:
  *         description: Internal server error
  */
-router.delete('/delete/:id', (req, res) => {
+router.delete('/delete/:id', (req: Request, res: Response) => {
     container.resolve(SubjectController).deleteSubjectById(req, res);
 });
 

@@ -2,16 +2,17 @@ import {Request, Response} from "express";
 import {TeacherService} from "../../Application/Services/TeacherService";
 import {ITeacherResponse} from "../Contracts/ITeacherResponse";
 import {TeacherModel} from "../../Domain/Models/TeacherModel";
-import {inject, singleton} from "tsyringe";
+import {inject, injectable} from "tsyringe";
 import {Types} from "mongoose";
 import {TeacherUpdateDTO} from "../../Domain/DTOs/TeacherDTOs/TeacherUpdateDTO";
 import {TeacherCreateDTO} from "../../Domain/DTOs/TeacherDTOs/TeacherCreateDTO";
+import {ITeacherService} from "../../Domain/Abstractions/Services/ITeacherService";
 
-@singleton()
+@injectable()
 class TeacherController {
-    private readonly _teacherService: TeacherService;
+    private readonly _teacherService: ITeacherService;
 
-    constructor(@inject(TeacherService) teacherService: TeacherService) {
+    constructor(@inject(TeacherService) teacherService: ITeacherService) {
         this._teacherService = teacherService
     }
 

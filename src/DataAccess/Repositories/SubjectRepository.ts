@@ -7,6 +7,7 @@ import { SubjectModel } from "../../Domain/Models/SubjectModel";
 import {Subject} from "../Schemas/Subject";
 import {SubjectMapper} from "../Mappers/SubjectMapper";
 import {injectable} from "tsyringe";
+import {Workload} from "../Schemas/Workload";
 
 @injectable()
 export class SubjectRepository implements ISubjectRepository {
@@ -53,8 +54,10 @@ export class SubjectRepository implements ISubjectRepository {
 
 
     async DeleteAll(): Promise<string> {
+        const deletedWorkloadResult = await Workload.deleteMany({});
         const result = await Subject.deleteMany({});
-        return `${result.deletedCount} subjects deleted`;
+        //return `${result.deletedCount} subjects deleted`;
+        return `${result.deletedCount} subjects deleted, ${deletedWorkloadResult.deletedCount} workloads deleted`;
     }
 
 
@@ -62,6 +65,8 @@ export class SubjectRepository implements ISubjectRepository {
         const deletedSubject = await Subject.findByIdAndDelete(id);
 
         if (!deletedSubject) throw new Error('Subject not found');  // Якщо не знайдений об'єкт, кидаємо помилку
+
+        await Workload.deleteMany({ subjectId: id });
 
         return deletedSubject._id as Types.ObjectId;  // Повертаємо id видаленого документа
     }

@@ -2,16 +2,17 @@ import {Request, Response} from "express";
 import {IWorkloadResponse} from "../Contracts/IWorkloadResponse";
 import {WorkloadService} from "../../Application/Services/WorkloadService";
 import {WorkloadModel} from "../../Domain/Models/WorkloadModel";
-import {inject, singleton} from "tsyringe";
+import {inject, injectable} from "tsyringe";
 import {Types} from "mongoose";
 import {WorkloadCreateDTO} from "../../Domain/DTOs/WorkloadDTOs/WorkloadCreateDTO";
 import {WorkloadUpdateDTO} from "../../Domain/DTOs/WorkloadDTOs/WorkloadUpdateDTO";
+import {IWorkloadService} from "../../Domain/Abstractions/Services/IWorkloadService";
 
-@singleton()
+@injectable()
 class WorkloadController {
-    private readonly _workloadService: WorkloadService;
+    private readonly _workloadService: IWorkloadService;
 
-    constructor(@inject(WorkloadService) workloadService: WorkloadService) {
+    constructor(@inject(WorkloadService) workloadService: IWorkloadService) {
         this._workloadService = workloadService
     }
 
