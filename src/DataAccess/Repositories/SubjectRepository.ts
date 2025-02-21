@@ -10,6 +10,8 @@ import {injectable} from "tsyringe";
 
 @injectable()
 export class SubjectRepository implements ISubjectRepository {
+
+
     async GetAll(): Promise<SubjectModel[]> {
         const subjectEntities: ISubjectEntity[] = await Subject.find();
         return subjectEntities.map(subjectEntity => SubjectMapper.EntityToDomain(subjectEntity));

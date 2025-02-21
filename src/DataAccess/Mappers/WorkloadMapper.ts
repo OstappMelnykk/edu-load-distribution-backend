@@ -5,8 +5,6 @@ import {IWorkloadEntity} from "../Entities/WorkloadEntity";
 export class WorkloadMapper {
 
     public static EntityToDomain(workloadEntity: IWorkloadEntity): WorkloadModel{
-        console.log(workloadEntity.teacherId,)
-        console.log(workloadEntity.subjectId,)
 
         const { instance, error } = WorkloadModel.Create(
             workloadEntity._id as Types.ObjectId,
