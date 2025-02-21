@@ -7,6 +7,8 @@ import {Types} from "mongoose";
 import {TeacherUpdateDTO} from "../../Domain/DTOs/TeacherDTOs/TeacherUpdateDTO";
 import {TeacherCreateDTO} from "../../Domain/DTOs/TeacherDTOs/TeacherCreateDTO";
 import {ITeacherService} from "../../Domain/Abstractions/Services/ITeacherService";
+import {IWorkload} from "../Contracts/IWorkload";
+import {Workload} from "../../DataAccess/Schemas/Workload";
 
 @injectable()
 class TeacherController {
@@ -56,6 +58,48 @@ class TeacherController {
             } else {
                 res.status(404).send("Teacher not found");
             }
+        } catch (error) {
+            const err = error as Error;
+            res.status(500).send(err.message);
+        }
+    }
+
+
+    public async getTeacherByIdWorkloads(req: Request, res: Response) {
+        const { id } = req.params;
+        try {
+            const workloads: IWorkload[] = await Workload.aggregate([
+                {
+                    $match: {
+                        teacherId: new Types.ObjectId(id)
+                    }
+                },
+                {
+                    $lookup: {
+                        from: 'teachers',
+                        localField: 'teacherId',
+                        foreignField: '_id',
+                        as: 'teacherId'
+                    }
+                },
+                {
+                    $lookup: {
+                        from: 'subjects',
+                        localField: 'subjectId',
+                        foreignField: '_id',
+                        as: 'subjectId'
+                    }
+                },
+                {
+                    $unwind: '$teacherId'
+                },
+                {
+                    $unwind: '$subjectId'
+                }
+            ]).exec();
+
+        res.send(workloads);
+
         } catch (error) {
             const err = error as Error;
             res.status(500).send(err.message);

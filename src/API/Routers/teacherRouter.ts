@@ -96,6 +96,78 @@ router.get('/get/:id', roleMiddleware(['ADMIN', 'USER']), (req: Request, res: Re
     container.resolve(TeacherController).getTeacherById(req, res);
 });
 
+
+
+
+
+
+/**
+ * @swagger
+ * /teacher/get/{id}/workloads:
+ *   get:
+ *     summary: Get workloads for a teacher by ID
+ *     tags: [Teacher]
+ *     security:
+ *       - BearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: Teacher ID
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: A list of workloads for the teacher
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   _id:
+ *                     type: string
+ *                   teacherId:
+ *                     type: object
+ *                     properties:
+ *                       _id:
+ *                         type: string
+ *                       firstName:
+ *                         type: string
+ *                       lastName:
+ *                         type: string
+ *                       middleName:
+ *                         type: string
+ *                       degree:
+ *                         type: string
+ *                       position:
+ *                         type: string
+ *                       experience:
+ *                         type: number
+ *                   subjectId:
+ *                     type: object
+ *                     properties:
+ *                       _id:
+ *                         type: string
+ *                       name:
+ *                         type: string
+ *                       hours:
+ *                         type: number
+ *                   groupNumber:
+ *                     type: string
+ *       401:
+ *         description: Unauthorized
+ *       404:
+ *         description: Teacher or workloads not found
+ *       500:
+ *         description: Internal server error
+ */
+router.get('/get/:id/workloads', roleMiddleware(['ADMIN', 'USER']), (req: Request, res: Response) => {
+    container.resolve(TeacherController).getTeacherByIdWorkloads(req, res);
+});
+
+
 /**
  * @swagger
  * /teacher/create:
