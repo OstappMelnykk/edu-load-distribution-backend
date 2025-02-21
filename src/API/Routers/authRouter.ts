@@ -2,13 +2,11 @@ import express, {Request, Response} from "express";
 import {container} from "tsyringe";
 import AuthController from "../Controllers/AuthController";
 import {check} from "express-validator";
-import authMiddleware from "../Middlewares/authMiddleware";
 import roleMiddleware from "../Middlewares/roleMiddleware";
+import currentUserMiddleware from "../Middlewares/currentUserMiddleware";
 
 
 const router = express.Router();
-
-
 
 
 /**
@@ -35,9 +33,80 @@ const router = express.Router();
  *       500:
  *         description: Internal server error.
  */
-router.get('/get', roleMiddleware(['USER']), (req, res) => {
+router.get('/get', roleMiddleware(['USER', 'ADMIN']), (req, res) => {
     container.resolve(AuthController).getAllUsers(req, res);
 });
+
+
+
+
+/**
+ * @swagger
+ * /auth/get/currentUser:
+ *   get:
+ *     summary: Get the current authenticated user
+ *     description: Retrieves the profile of the currently authenticated user.
+ *     tags:
+ *       - CurrentUser
+ *     security:
+ *       - BearerAuth: []
+ *     responses:
+ *       200:
+ *         description: User profile retrieved successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 user:
+ *                   type: object
+ *                   properties:
+ *                     id:
+ *                       type: string
+ *                       example: "12345"
+ *                     email:
+ *                       type: string
+ *                       example: "user_admin@ukr.net"
+ *                     password:
+ *                       type: string
+ *                       example: "user_admin"  # Пароль користувача
+ *                     roles:
+ *                       type: array
+ *                       items:
+ *                         type: string
+ *                         example: "ADMIN"
+ *                     teacherId:
+ *                       type: string
+ *                       example: "T12345"
+ *       404:
+ *         description: User not found.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "User not found"
+ *       401:
+ *         description: Unauthorized. Invalid or missing authentication token.
+ *       500:
+ *         description: Internal server error.
+ */
+router.get('/get/currentUser', roleMiddleware(['ADMIN', 'USER']), currentUserMiddleware, async (req: Request, res: Response): Promise<void> => {
+    if (!req.user) {
+        res.status(404).json({ message: 'User not found' });
+        return;
+    }
+
+
+    res.json({ user: req.user }); // Відправляємо відповідь
+});
+
+
+
+
+
 
 /*{
     "email": "",
@@ -69,10 +138,10 @@ router.get('/get', roleMiddleware(['USER']), (req, res) => {
  *             properties:
  *               email:
  *                 type: string
- *                 example: "user@example.com"
+ *                 example: "user_admin@ukr.net"
  *               password:
  *                 type: string
- *                 example: "pass123"
+ *                 example: "user_admin"
  *               firstName:
  *                 type: string
  *                 example: "John"
@@ -125,10 +194,10 @@ router.post('/registration', [
  *             properties:
  *               email:
  *                 type: string
- *                 example: "user@example.com"
+ *                 example: "user_admin@ukr.net"
  *               password:
  *                 type: string
- *                 example: "password123"
+ *                 example: "user_admin"
  *     responses:
  *       200:
  *         description: Login successful, returns a token.
