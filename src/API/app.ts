@@ -8,6 +8,7 @@ import teacherRouter from "./Routers/teacherRouter";
 import workloadRouter from "./Routers/workloadRouter";
 import swaggerUi from "swagger-ui-express";
 import {swaggerSpec} from "./swagger";
+import authRouter from "./Routers/authRouter";
 
 dotenv.config();
 
@@ -36,6 +37,7 @@ class App {
                 res.send("hello");
             })
 
+            this.app.use("/auth", authRouter);
             this.app.use("/subject", subjectRouter);
             this.app.use("/teacher", teacherRouter);
             this.app.use("/workload", workloadRouter);

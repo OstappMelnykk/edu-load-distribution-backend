@@ -7,6 +7,8 @@ import {ITeacherEntity} from "../Entities/ITeacherEntity";
 import {Teacher} from "../Schemas/Teacher";
 import {TeacherMapper} from "../Mappers/TeacherMapper";
 import {injectable} from "tsyringe";
+import {Workload} from "../Schemas/Workload";
+import {User} from "../Schemas/User";
 
 
 @injectable()
@@ -50,13 +52,19 @@ export class TeacherRepository implements ITeacherRepository {
         return updatedTeacher._id as Types.ObjectId;
     }
     async DeleteAll(): Promise<string> {
+        const deletedWorkloadResult = await Workload.deleteMany({});
+        const deletedUserResult = await User.deleteMany({});
         const result = await Teacher.deleteMany({});
-        return `${result.deletedCount} teachers deleted`;
+        //return `${result.deletedCount} teachers deleted`;
+        return `${result.deletedCount} teachers deleted, ${deletedWorkloadResult.deletedCount} workloads deleted`;
     }
     async DeleteById(id: Types.ObjectId): Promise<Types.ObjectId> {
         const deletedTeacher = await Teacher.findByIdAndDelete(id);
 
         if (!deletedTeacher) throw new Error('Teacher not found');
+
+        const deletedWorkloadResult = await Workload.deleteMany({ teacherId: id });
+        const deletedUserResult = await User.deleteMany({ teacherId: id });
 
         return deletedTeacher._id as Types.ObjectId;
     }
