@@ -33,7 +33,6 @@ export class WorkloadModel {
     public  get id(){
         return this._id
     }
-
     public get teacherId(){
         return this._teacherId
     }

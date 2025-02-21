@@ -3,9 +3,9 @@ import express, { Express } from "express"
 import dotenv from "dotenv"
 import cors from "cors"
 import connectDB from "../DataAccess/dbConnection";
-import subjectRoutes from "./Routes/subjectRoutes";
-import teacherRoutes from "./Routes/teacherRoutes";
-import workloadRoutes from "./Routes/workloadRoutes";
+import subjectRouter from "./Routers/subjectRouter";
+import teacherRouter from "./Routers/teacherRouter";
+import workloadRouter from "./Routers/workloadRouter";
 import swaggerUi from "swagger-ui-express";
 import {swaggerSpec} from "./swagger";
 
@@ -36,9 +36,9 @@ class App {
                 res.send("hello");
             })
 
-            this.app.use("/subject", subjectRoutes);
-            this.app.use("/teacher", teacherRoutes);
-            this.app.use("/workload", workloadRoutes);
+            this.app.use("/subject", subjectRouter);
+            this.app.use("/teacher", teacherRouter);
+            this.app.use("/workload", workloadRouter);
 
             this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 

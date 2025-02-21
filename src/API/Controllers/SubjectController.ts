@@ -7,6 +7,7 @@ import {SubjectModel} from "../../Domain/Models/SubjectModel";
 import {SubjectCreateDTO} from "../../Domain/DTOs/SubjectDTOs/SubjectCreateDTO";
 import {SubjectUpdateDTO} from "../../Domain/DTOs/SubjectDTOs/SubjectUpdateDTO";
 
+
 @injectable()
 export class SubjectController {
 
