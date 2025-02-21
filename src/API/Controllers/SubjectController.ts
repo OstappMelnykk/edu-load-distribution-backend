@@ -3,6 +3,9 @@ import {SubjectService} from "../../Application/Services/SubjectService";
 import {ISubjectResponse} from "../Contracts/ISubjectResponse";
 import {inject, injectable} from "tsyringe";
 import {Types} from "mongoose";
+import {SubjectModel} from "../../Domain/Models/SubjectModel";
+import {SubjectCreateDTO} from "../../Domain/DTOs/SubjectDTOs/SubjectCreateDTO";
+import {SubjectUpdateDTO} from "../../Domain/DTOs/SubjectDTOs/SubjectUpdateDTO";
 
 @injectable()
 export class SubjectController {
@@ -33,7 +36,7 @@ export class SubjectController {
     public async getSubjectById(req: Request, res: Response) {
         const {id} = req.params;
         try {
-            const subject = await this._subjectService.getSubjectById(new Types.ObjectId(id));
+            const subject: SubjectModel | null = await this._subjectService.getSubjectById(new Types.ObjectId(id));
             if (!subject) {
                 return res.status(404).send('Subject not found');
             }
@@ -50,9 +53,9 @@ export class SubjectController {
     }
 
     public async createSubject(req: Request, res: Response) {
-        const subjectCreateDTO = req.body;
+        const subjectCreateDTO: SubjectCreateDTO = req.body;
         try {
-            const newSubjectId = await this._subjectService.createSubject(subjectCreateDTO);
+            const newSubjectId: Types.ObjectId = await this._subjectService.createSubject(subjectCreateDTO);
             res.status(201).send({ id: newSubjectId });
         } catch (error) {
             const err = error as Error;
@@ -62,9 +65,9 @@ export class SubjectController {
 
     public async updateSubject(req: Request, res: Response) {
         const { id } = req.params;
-        const subjectUpdateDTO = req.body;
+        const subjectUpdateDTO: SubjectUpdateDTO = req.body;
         try {
-            const updatedSubjectId = await this._subjectService.updateSubject(
+            const updatedSubjectId: Types.ObjectId = await this._subjectService.updateSubject(
                 new Types.ObjectId(id),
                 subjectUpdateDTO
             );
@@ -77,8 +80,8 @@ export class SubjectController {
 
     public async deleteAllSubjects(req: Request, res: Response) {
         try {
-            const result = await this._subjectService.deleteAllSubjects();
-            res.send(result);
+            const message:string = await this._subjectService.deleteAllSubjects();
+            res.send(message);
         } catch (error) {
             const err = error as Error;
             res.status(500).send(err.message);
