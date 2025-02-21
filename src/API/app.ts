@@ -9,6 +9,7 @@ import workloadRouter from "./Routers/workloadRouter";
 import swaggerUi from "swagger-ui-express";
 import {swaggerSpec} from "./swagger";
 import authRouter from "./Routers/authRouter";
+import {createData} from "./createData";
 
 dotenv.config();
 
@@ -27,6 +28,7 @@ class App {
 
         try {
             await connectDB();
+            //await createData();
 
             this.app.listen(process.env.API_PORT, () => {
                 console.log(`Server available at http://localhost:${process.env.API_PORT}`);

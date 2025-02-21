@@ -2,6 +2,7 @@ import express, {Request, Response} from "express";
 import TeacherController from "../Controllers/TeacherController";
 
 import {container} from "tsyringe";
+import roleMiddleware from "../Middlewares/roleMiddleware";
 
 
 const router = express.Router();
@@ -12,6 +13,8 @@ const router = express.Router();
  *   get:
  *     summary: Get all teachers
  *     tags: [Teacher]
+ *     security:
+ *       - BearerAuth: []
  *     responses:
  *       200:
  *         description: A list of teachers
@@ -36,10 +39,12 @@ const router = express.Router();
  *                     type: string
  *                   experience:
  *                     type: number
+ *       401:
+ *         description: Unauthorized
  *       500:
  *         description: Internal server error
  */
-router.get('/get', (req: Request, res: Response) => {
+router.get('/get', roleMiddleware(['ADMIN', 'USER']), (req: Request, res: Response) => {
     container.resolve(TeacherController).getAllTeachers(req, res);
 });
 
@@ -49,6 +54,8 @@ router.get('/get', (req: Request, res: Response) => {
  *   get:
  *     summary: Get a teacher by ID
  *     tags: [Teacher]
+ *     security:
+ *       - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -78,12 +85,14 @@ router.get('/get', (req: Request, res: Response) => {
  *                   type: string
  *                 experience:
  *                   type: number
+ *       401:
+ *         description: Unauthorized
  *       404:
  *         description: Teacher not found
  *       500:
  *         description: Internal server error
  */
-router.get('/get/:id', (req: Request, res: Response) => {
+router.get('/get/:id', roleMiddleware(['ADMIN', 'USER']), (req: Request, res: Response) => {
     container.resolve(TeacherController).getTeacherById(req, res);
 });
 
@@ -93,6 +102,8 @@ router.get('/get/:id', (req: Request, res: Response) => {
  *   post:
  *     summary: Create a new teacher
  *     tags: [Teacher]
+ *     security:
+ *       - BearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -128,10 +139,12 @@ router.get('/get/:id', (req: Request, res: Response) => {
  *               properties:
  *                 id:
  *                   type: string
+ *       401:
+ *         description: Unauthorized
  *       500:
  *         description: Internal server error
  */
-router.post('/create', (req: Request, res: Response) => {
+router.post('/create', roleMiddleware(['ADMIN']), (req: Request, res: Response) => {
     container.resolve(TeacherController).createTeacher(req, res);
 });
 
@@ -141,6 +154,8 @@ router.post('/create', (req: Request, res: Response) => {
  *   put:
  *     summary: Update an existing teacher
  *     tags: [Teacher]
+ *     security:
+ *       - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -183,10 +198,14 @@ router.post('/create', (req: Request, res: Response) => {
  *               properties:
  *                 id:
  *                   type: string
+ *       400:
+ *         description: Invalid request body or parameters
+ *       404:
+ *         description: Teacher not found
  *       500:
  *         description: Internal server error
  */
-router.put('/update/:id', (req: Request, res: Response) => {
+router.put('/update/:id', roleMiddleware(['ADMIN']), (req: Request, res: Response) => {
     container.resolve(TeacherController).updateTeacher(req, res);
 });
 
@@ -196,13 +215,17 @@ router.put('/update/:id', (req: Request, res: Response) => {
  *   delete:
  *     summary: Delete all teachers
  *     tags: [Teacher]
+ *     security:
+ *       - BearerAuth: []
  *     responses:
  *       200:
  *         description: Teachers deleted successfully
+ *       403:
+ *          description: Unauthorized, only ADMIN can perform this action
  *       500:
  *         description: Internal server error
  */
-router.delete('/delete', (req: Request, res: Response) => {
+router.delete('/delete', roleMiddleware(['ADMIN']), (req: Request, res: Response) => {
     container.resolve(TeacherController).deleteAllTeachers(req, res);
 });
 
@@ -212,6 +235,8 @@ router.delete('/delete', (req: Request, res: Response) => {
  *   delete:
  *     summary: Delete a teacher by ID
  *     tags: [Teacher]
+ *     security:
+ *       - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -229,10 +254,14 @@ router.delete('/delete', (req: Request, res: Response) => {
  *               properties:
  *                 id:
  *                   type: string
+ *       403:
+ *         description: Unauthorized, only ADMIN can perform this action
+ *       404:
+ *         description: Teacher not found
  *       500:
  *         description: Internal server error
  */
-router.delete('/delete/:id', (req: Request, res: Response) => {
+router.delete('/delete/:id', roleMiddleware(['ADMIN']), (req: Request, res: Response) => {
     container.resolve(TeacherController).deleteTeacherById(req, res);
 });
 

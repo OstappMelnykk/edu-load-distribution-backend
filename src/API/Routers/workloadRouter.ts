@@ -1,6 +1,7 @@
 import express, {Request, Response} from "express";
 import WorkloadController from "../Controllers/WorkloadController";
 import {container} from "tsyringe";
+import roleMiddleware from "../Middlewares/roleMiddleware";
 
 
 const router = express.Router();
@@ -12,6 +13,8 @@ const router = express.Router();
 *   get:
 *     summary: Get all workloads
 *     tags: [Workload]
+*     security:
+*         - BearerAuth: []
 *     responses:
 *       200:
 *         description: A list of workloads
@@ -30,10 +33,12 @@ const router = express.Router();
 *                     type: string
 *                   groupNumber:
 *                     type: string
+*       401:
+*          description: Unauthorized
 *       500:
 *         description: Internal server error
 */
-router.get('/get', (req: Request, res: Response) => {
+router.get('/get', roleMiddleware(['ADMIN', 'USER']), (req: Request, res: Response) => {
     container.resolve(WorkloadController).getAllWorkloads(req, res);
 });
 
@@ -43,6 +48,8 @@ router.get('/get', (req: Request, res: Response) => {
  *   get:
  *     summary: Get a workload by ID
  *     tags: [Workload]
+ *     security:
+ *       - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -66,12 +73,14 @@ router.get('/get', (req: Request, res: Response) => {
  *                   type: string
  *                 groupNumber:
  *                   type: string
+ *       401:
+ *         description: Unauthorized
  *       404:
  *         description: Workload not found
  *       500:
  *         description: Internal server error
  */
-router.get('/get/:id', (req: Request, res: Response) => {
+router.get('/get/:id', roleMiddleware(['ADMIN', 'USER']), (req: Request, res: Response) => {
     container.resolve(WorkloadController).getWorkloadById(req, res);
 });
 
@@ -81,6 +90,8 @@ router.get('/get/:id', (req: Request, res: Response) => {
  *   post:
  *     summary: Create a new workload
  *     tags: [Workload]
+ *     security:
+ *       - BearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -108,10 +119,12 @@ router.get('/get/:id', (req: Request, res: Response) => {
  *               properties:
  *                 id:
  *                   type: string
+ *       401:
+ *         description: Unauthorized
  *       500:
  *         description: Internal server error
  */
-router.post('/create', (req: Request, res: Response) => {
+router.post('/create', roleMiddleware(['ADMIN', 'USER']), (req: Request, res: Response) => {
     container.resolve(WorkloadController).createWorkload(req, res);
 });
 
@@ -121,6 +134,8 @@ router.post('/create', (req: Request, res: Response) => {
  *   put:
  *     summary: Update an existing workload
  *     tags: [Workload]
+ *     security:
+ *       - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -151,12 +166,14 @@ router.post('/create', (req: Request, res: Response) => {
  *               properties:
  *                 id:
  *                   type: string
+ *       400:
+ *         description: Invalid request body or parameters
  *       404:
  *         description: Workload not found
  *       500:
  *         description: Internal server error
  */
-router.put('/update/:id', (req: Request, res: Response) => {
+router.put('/update/:id', roleMiddleware(['ADMIN', 'USER']), (req: Request, res: Response) => {
     container.resolve(WorkloadController).updateWorkload(req, res);
 });
 
@@ -166,13 +183,17 @@ router.put('/update/:id', (req: Request, res: Response) => {
  *   delete:
  *     summary: Delete all workloads
  *     tags: [Workload]
+ *     security:
+ *       - BearerAuth: []
  *     responses:
  *       200:
  *         description: Workloads deleted successfully
+ *       403:
+ *         description: Unauthorized
  *       500:
  *         description: Internal server error
  */
-router.delete('/delete', (req: Request, res: Response) => {
+router.delete('/delete', roleMiddleware(['ADMIN', 'USER']), (req: Request, res: Response) => {
     container.resolve(WorkloadController).deleteAllWorkloads(req, res);
 });
 
@@ -182,6 +203,8 @@ router.delete('/delete', (req: Request, res: Response) => {
  *   delete:
  *     summary: Delete a workload by ID
  *     tags: [Workload]
+ *     security:
+ *       - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -199,12 +222,14 @@ router.delete('/delete', (req: Request, res: Response) => {
  *               properties:
  *                 id:
  *                   type: string
+ *       403:
+ *         description: Unauthorized
  *       404:
  *         description: Workload not found
  *       500:
  *         description: Internal server error
  */
-router.delete('/delete/:id', (req: Request, res: Response) => {
+router.delete('/delete/:id', roleMiddleware(['ADMIN', 'USER']),  (req: Request, res: Response) => {
     container.resolve(WorkloadController).deleteWorkloadById(req, res);
 });
 

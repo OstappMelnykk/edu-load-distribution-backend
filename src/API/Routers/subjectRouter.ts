@@ -1,6 +1,7 @@
 import express, {Request, Response} from "express";
 import SubjectController from "../Controllers/SubjectController";
 import {container} from "tsyringe";
+import roleMiddleware from "../Middlewares/roleMiddleware";
 const router = express.Router();
 
 /**
@@ -9,6 +10,8 @@ const router = express.Router();
  *   get:
  *     summary: Get all subjects
  *     tags: [Subject]
+ *     security:
+ *       - BearerAuth: []
  *     responses:
  *       200:
  *         description: A list of subjects
@@ -25,10 +28,12 @@ const router = express.Router();
  *                     type: string
  *                   hours:
  *                     type: number
+ *       401:
+ *         description: Unauthorized
  *       500:
  *         description: Internal server error
  */
-router.get('/get', (req: Request, res: Response) => {
+router.get('/get', roleMiddleware(['ADMIN', 'USER']), (req: Request, res: Response) => {
     container.resolve(SubjectController).getAllSubjects(req, res);
 });
 
@@ -40,6 +45,8 @@ router.get('/get', (req: Request, res: Response) => {
  *   get:
  *     summary: Get a subject by ID
  *     tags: [Subject]
+ *     security:
+ *       - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -61,12 +68,14 @@ router.get('/get', (req: Request, res: Response) => {
  *                   type: string
  *                 hours:
  *                   type: number
+ *       401:
+ *         description: Unauthorized
  *       404:
  *         description: Subject not found
  *       500:
  *         description: Internal server error
  */
-router.get('/get/:id', (req: Request, res: Response) => {
+router.get('/get/:id', roleMiddleware(['ADMIN', 'USER']), (req: Request, res: Response) => {
     container.resolve(SubjectController).getSubjectById(req, res);
 });
 
@@ -78,6 +87,8 @@ router.get('/get/:id', (req: Request, res: Response) => {
  *   post:
  *     summary: Create a new subject
  *     tags: [Subject]
+ *     security:
+ *       - BearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -102,10 +113,12 @@ router.get('/get/:id', (req: Request, res: Response) => {
  *               properties:
  *                 id:
  *                   type: string
+ *       401:
+ *         description: Unauthorized
  *       500:
  *         description: Internal server error
  */
-router.post('/create', (req: Request, res: Response) => {
+router.post('/create', roleMiddleware(['ADMIN']), (req: Request, res: Response) => {
     container.resolve(SubjectController).createSubject(req, res);
 });
 
@@ -117,6 +130,8 @@ router.post('/create', (req: Request, res: Response) => {
  *   put:
  *     summary: Update an existing subject
  *     tags: [Subject]
+ *     security:
+ *       - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -133,8 +148,10 @@ router.post('/create', (req: Request, res: Response) => {
  *             properties:
  *               name:
  *                 type: string
+ *                 example: "Mathematics"
  *               hours:
  *                 type: number
+ *                 example: 40
  *             required:
  *               - name
  *               - hours
@@ -148,10 +165,15 @@ router.post('/create', (req: Request, res: Response) => {
  *               properties:
  *                 id:
  *                   type: string
+ *                   example: "12345"
+ *       400:
+ *         description: Invalid request body or parameters
+ *       404:
+ *         description: Subject not found
  *       500:
  *         description: Internal server error
  */
-router.put('/update/:id', (req: Request, res: Response) => {
+router.put('/update/:id', roleMiddleware(['ADMIN']), (req: Request, res: Response) => {
     container.resolve(SubjectController).updateSubject(req, res);
 });
 
@@ -164,13 +186,25 @@ router.put('/update/:id', (req: Request, res: Response) => {
  *   delete:
  *     summary: Delete all subjects
  *     tags: [Subject]
+ *     security:
+ *       - BearerAuth: []
  *     responses:
  *       200:
  *         description: Subjects deleted successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "All subjects have been deleted."
+ *       403:
+ *         description: Unauthorized, only ADMIN can perform this action
  *       500:
  *         description: Internal server error
  */
-router.delete('/delete', (req, res) => {
+router.delete('/delete', roleMiddleware(['ADMIN']), (req, res) => {
     container.resolve(SubjectController).deleteAllSubjects(req, res);
 });
 
@@ -183,6 +217,8 @@ router.delete('/delete', (req, res) => {
  *   delete:
  *     summary: Delete a subject by ID
  *     tags: [Subject]
+ *     security:
+ *       - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -200,10 +236,14 @@ router.delete('/delete', (req, res) => {
  *               properties:
  *                 id:
  *                   type: string
+ *       403:
+ *         description: Unauthorized, only ADMIN can perform this action
+ *       404:
+ *         description: Subject not found
  *       500:
  *         description: Internal server error
  */
-router.delete('/delete/:id', (req: Request, res: Response) => {
+router.delete('/delete/:id', roleMiddleware(['ADMIN']), (req: Request, res: Response) => {
     container.resolve(SubjectController).deleteSubjectById(req, res);
 });
 

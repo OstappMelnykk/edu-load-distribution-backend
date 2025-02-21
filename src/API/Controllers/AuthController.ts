@@ -141,10 +141,6 @@ class AuthController {
             res.status(400).json({message: "Login error"});
         }
     }
-
-
-
-
 }
 
 export default AuthController;
