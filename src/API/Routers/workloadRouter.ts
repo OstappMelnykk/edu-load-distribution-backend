@@ -188,6 +188,14 @@ router.put('/update/:id', roleMiddleware(['ADMIN', 'USER']), (req: Request, res:
  *     responses:
  *       200:
  *         description: Workloads deleted successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "All workloads have been deleted."
  *       403:
  *         description: Unauthorized
  *       500:

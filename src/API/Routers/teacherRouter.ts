@@ -307,6 +307,14 @@ router.put('/update/:id', roleMiddleware(['ADMIN']), (req: Request, res: Respons
  *     responses:
  *       200:
  *         description: Teachers deleted successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "All teachers have been deleted."
  *       403:
  *          description: Unauthorized, only ADMIN can perform this action
  *       500:
