@@ -9,6 +9,7 @@ import {TeacherCreateDTO} from "../../Domain/DTOs/TeacherDTOs/TeacherCreateDTO";
 import {ITeacherService} from "../../Domain/Abstractions/Services/ITeacherService";
 import {IWorkload} from "../Contracts/IWorkload";
 import {Workload} from "../../DataAccess/Schemas/Workload";
+import {IExtendedWorkloadResponse} from "../Contracts/IExtendedWorkloadResponse";
 
 @injectable()
 class TeacherController {
@@ -98,7 +99,27 @@ class TeacherController {
                 }
             ]).exec();
 
-        res.send(workloads);
+
+            const response: IExtendedWorkloadResponse[] = workloads.map((workload) => ({
+                id: workload._id,
+                teacherId: {
+                    id: workload.teacherId._id,
+                    firstName: workload.teacherId.firstName,
+                    lastName: workload.teacherId.lastName,
+                    middleName: workload.teacherId.middleName,
+                    degree: workload.teacherId.degree,
+                    position: workload.teacherId.position,
+                    experience: workload.teacherId.experience
+                },
+                subjectId: {
+                    id: workload.subjectId._id,
+                    name: workload.subjectId.name,
+                    hours: workload.subjectId.hours
+                },
+                groupNumber: workload.groupNumber
+            }));
+
+            res.send(response);
 
         } catch (error) {
             const err = error as Error;

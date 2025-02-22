@@ -19,6 +19,7 @@ import {IUserResponse} from "../Contracts/IUserResponse";
 import dotenv from "dotenv";
 import {Workload} from "../../DataAccess/Schemas/Workload";
 import {IWorkload} from "../Contracts/IWorkload";
+import {IExtendedWorkloadResponse} from "../Contracts/IExtendedWorkloadResponse";
 
 dotenv.config();
 
@@ -102,9 +103,27 @@ class AuthController {
                 }
             ]).exec();
 
+            const response: IExtendedWorkloadResponse[] = workloads.map((workload) => ({
+                id: workload._id,
+                teacherId: {
+                    id: workload.teacherId._id,
+                    firstName: workload.teacherId.firstName,
+                    lastName: workload.teacherId.lastName,
+                    middleName: workload.teacherId.middleName,
+                    degree: workload.teacherId.degree,
+                    position: workload.teacherId.position,
+                    experience: workload.teacherId.experience
+                },
+                subjectId: {
+                    id: workload.subjectId._id,
+                    name: workload.subjectId.name,
+                    hours: workload.subjectId.hours
+                },
+                groupNumber: workload.groupNumber
+            }));
 
 
-            res.send(workloads);
+            res.json(response);
         }
         catch (error) {
             const err = error as Error;
