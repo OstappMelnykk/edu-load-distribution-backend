@@ -57,38 +57,50 @@ router.get('/get', roleMiddleware(['USER', 'ADMIN']), (req, res) => {
  *               items:
  *                 type: object
  *                 properties:
- *                   _id:
+ *                   id:
  *                     type: string
+ *                     description: The unique identifier of the workload.
  *                   teacherId:
  *                     type: object
  *                     properties:
- *                       _id:
+ *                       id:
  *                         type: string
+ *                         description: The unique identifier of the teacher.
  *                       firstName:
  *                         type: string
+ *                         description: The first name of the teacher.
  *                       lastName:
  *                         type: string
+ *                         description: The last name of the teacher.
  *                       middleName:
  *                         type: string
+ *                         description: The middle name of the teacher.
  *                       degree:
  *                         type: string
+ *                         description: The degree of the teacher.
  *                         enum: ['degree_1', 'degree_2', 'degree_3', 'degree_4', 'degree_5']
  *                       position:
  *                         type: string
+ *                         description: The position of the teacher.
  *                         enum: ['position_1', 'position_2', 'position_3', 'position_4', 'position_5']
  *                       experience:
  *                         type: number
+ *                         description: The years of experience of the teacher.
  *                   subjectId:
  *                     type: object
  *                     properties:
- *                       _id:
+ *                       id:
  *                         type: string
+ *                         description: The unique identifier of the subject.
  *                       name:
  *                         type: string
+ *                         description: The name of the subject.
  *                       hours:
  *                         type: number
+ *                         description: The number of hours allocated for the subject.
  *                   groupNumber:
  *                     type: string
+ *                     description: The group number associated with the workload.
  *       400:
  *         description: Error retrieving workloads for the current user.
  *       401:
@@ -96,9 +108,10 @@ router.get('/get', roleMiddleware(['USER', 'ADMIN']), (req, res) => {
  *       500:
  *         description: Internal server error.
  */
-router.get('/me/workloads', roleMiddleware(['USER', 'ADMIN']), (req, res) => {
+router.get('/me/workloads', roleMiddleware(['USER', 'ADMIN']), currentUserMiddleware, (req, res) => {
     container.resolve(AuthController).getCurrentUserWorkloads(req, res);
 });
+
 
 
 
