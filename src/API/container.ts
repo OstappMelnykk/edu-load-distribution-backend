@@ -1,5 +1,5 @@
 import "reflect-metadata";
-import {container, scoped} from "tsyringe";
+import {container} from "tsyringe";
 import { SubjectRepository } from "../DataAccess/Repositories/SubjectRepository";
 import { SubjectService } from "../Application/Services/SubjectService";
 import { TeacherRepository } from "../DataAccess/Repositories/TeacherRepository";

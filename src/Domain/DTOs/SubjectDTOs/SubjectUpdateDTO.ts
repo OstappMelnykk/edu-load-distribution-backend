@@ -1,4 +1,5 @@
 export type SubjectUpdateDTO = {
     name?: string;
-    hours?: number;
+    lectureHours?: number,
+    practiceHours?: number,
 };

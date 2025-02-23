@@ -95,9 +95,15 @@ router.get('/get', roleMiddleware(['USER', 'ADMIN']), (req, res) => {
  *                       name:
  *                         type: string
  *                         description: The name of the subject.
- *                       hours:
+ *                       lectureHours:
  *                         type: number
- *                         description: The number of hours allocated for the subject.
+ *                         description: The number of lectureHours allocated for the subject.
+ *                       practiceHours:
+ *                         type: number
+ *                         description: The number of practiceHours allocated for the subject.
+ *                       totalHours:
+ *                         type: number
+ *                         description: The number of totalHours allocated for the subject.
  *                   groupNumber:
  *                     type: string
  *                     description: The group number associated with the workload.

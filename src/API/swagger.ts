@@ -53,7 +53,7 @@ const swaggerOptions = {
                         teacherId: {
                             type: 'string',
                             description: 'Teacher ID (MongoDB ObjectId)',
-                            format: 'uuid', // Використовуйте uuid або збережіть як string
+                            format: 'uuid',
                         },
                     },
                 },

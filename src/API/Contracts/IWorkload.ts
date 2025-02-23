@@ -7,4 +7,5 @@ export interface IWorkload {
     teacherId: ITeacher;
     subjectId: ISubject;
     groupNumber: string;
+    year: number;
 }

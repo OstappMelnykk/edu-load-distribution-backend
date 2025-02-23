@@ -4,4 +4,5 @@ export type WorkloadUpdateDTO = {
     teacherId?: Types.ObjectId;
     subjectId?: Types.ObjectId;
     groupNumber?: string;
+    year?: number;
 };

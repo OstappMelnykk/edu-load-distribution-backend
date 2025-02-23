@@ -24,7 +24,8 @@ class WorkloadController {
                 id: workload.id,
                 teacherId: workload.teacherId,
                 subjectId: workload.subjectId,
-                groupNumber: workload.groupNumber
+                groupNumber: workload.groupNumber,
+                year: workload.year
             }));
 
             res.send(responce);
@@ -48,7 +49,8 @@ class WorkloadController {
                 id: workload.id,
                 teacherId: workload.teacherId,
                 subjectId: workload.subjectId,
-                groupNumber: workload.groupNumber
+                groupNumber: workload.groupNumber,
+                year: workload.year
             };
 
             res.send(response);

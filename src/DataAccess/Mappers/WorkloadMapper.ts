@@ -11,6 +11,7 @@ export class WorkloadMapper {
             workloadEntity.teacherId,
             workloadEntity.subjectId,
             workloadEntity.groupNumber,
+            workloadEntity.year
         );
 
         if (error) throw new Error(error);
@@ -24,6 +25,7 @@ export class WorkloadMapper {
             teacherId: workloadModel.teacherId,
             subjectId: workloadModel.subjectId,
             groupNumber: workloadModel.groupNumber,
+            year: workloadModel.year,
         } as IWorkloadEntity;
     }
 

@@ -8,6 +8,8 @@ import {Subject} from "../Schemas/Subject";
 import {SubjectMapper} from "../Mappers/SubjectMapper";
 import {injectable} from "tsyringe";
 import {Workload} from "../Schemas/Workload";
+import {ISubjectResponse} from "../../API/Contracts/ISubjectResponse";
+import {ISubject} from "../../API/Contracts/ISubject";
 
 @injectable()
 export class SubjectRepository implements ISubjectRepository {
@@ -32,7 +34,8 @@ export class SubjectRepository implements ISubjectRepository {
     async Create(subjectCreateDTO: SubjectCreateDTO): Promise<Types.ObjectId> {
         const subjectEntity: ISubjectEntity = new Subject({
             name: subjectCreateDTO.name,
-            hours: subjectCreateDTO.hours
+            lectureHours: subjectCreateDTO.lectureHours,
+            practiceHours: subjectCreateDTO.practiceHours
         });
 
         const savedSubject = await subjectEntity.save();
@@ -41,10 +44,32 @@ export class SubjectRepository implements ISubjectRepository {
 
 
     async Update(id: Types.ObjectId, subjectUpdateDTO: SubjectUpdateDTO): Promise<Types.ObjectId> {
+
+        const oldSubject: ISubject = (await Subject.aggregate([
+            {
+                $match: {
+                    _id: id
+                }
+            }]))[0];
+
+        let updateType: {
+            name: string;
+            lectureHours: number;
+            practiceHours: number;
+            totalHours: number;
+        } = {
+            name: subjectUpdateDTO.name ?? oldSubject.name,
+            lectureHours: subjectUpdateDTO.lectureHours ?? oldSubject.lectureHours,
+            practiceHours: subjectUpdateDTO.practiceHours ?? oldSubject.practiceHours,
+            totalHours: 0,
+        };
+
+        updateType.totalHours = (updateType.lectureHours || 0) + (updateType.practiceHours || 0);
+
         const updatedSubject = await Subject.findByIdAndUpdate(
             id,
-            { $set: subjectUpdateDTO },  // Оновлюємо лише ті поля, що передані
-            { new: true }  // Повертаємо оновлений документ
+            { $set: updateType },
+            { new: true }
         );
 
         if (!updatedSubject) throw new Error('Subject not found');
@@ -64,10 +89,10 @@ export class SubjectRepository implements ISubjectRepository {
     async DeleteById(id: Types.ObjectId): Promise<Types.ObjectId> {
         const deletedSubject = await Subject.findByIdAndDelete(id);
 
-        if (!deletedSubject) throw new Error('Subject not found');  // Якщо не знайдений об'єкт, кидаємо помилку
+        if (!deletedSubject) throw new Error('Subject not found');
 
         await Workload.deleteMany({ subjectId: id });
 
-        return deletedSubject._id as Types.ObjectId;  // Повертаємо id видаленого документа
+        return deletedSubject._id as Types.ObjectId;
     }
 }

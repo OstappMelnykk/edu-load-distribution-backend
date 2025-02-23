@@ -5,4 +5,5 @@ export interface IWorkloadResponse {
     teacherId: Types.ObjectId;
     subjectId: Types.ObjectId;
     groupNumber: string;
+    year: number;
 }

@@ -26,8 +26,15 @@ const router = express.Router();
  *                     type: string
  *                   name:
  *                     type: string
- *                   hours:
+ *                   lectureHours:
  *                     type: number
+ *                     description: The number of lectureHours allocated for the subject.
+ *                   practiceHours:
+ *                     type: number
+ *                     description: The number of practiceHours allocated for the subject.
+ *                   totalHours:
+ *                     type: number
+ *                     description: The number of totalHours allocated for the subject.
  *       401:
  *         description: Unauthorized
  *       500:
@@ -66,8 +73,15 @@ router.get('/get', roleMiddleware(['ADMIN', 'USER']), (req: Request, res: Respon
  *                   type: string
  *                 name:
  *                   type: string
- *                 hours:
+ *                 lectureHours:
  *                   type: number
+ *                   description: The number of lectureHours allocated for the subject.
+ *                 practiceHours:
+ *                   type: number
+ *                   description: The number of practiceHours allocated for the subject.
+ *                 totalHours:
+ *                   type: number
+ *                   description: The number of totalHours allocated for the subject.
  *       401:
  *         description: Unauthorized
  *       404:
@@ -98,11 +112,16 @@ router.get('/get/:id', roleMiddleware(['ADMIN', 'USER']), (req: Request, res: Re
  *             properties:
  *               name:
  *                 type: string
- *               hours:
+ *               lectureHours:
  *                 type: number
+ *                 description: The number of lectureHours allocated for the subject.
+ *               practiceHours:
+ *                 type: number
+ *                 description: The number of practiceHours allocated for the subject.
  *             required:
  *               - name
- *               - hours
+ *               - lectureHours
+ *               - practiceHours
  *     responses:
  *       201:
  *         description: Subject created successfully
@@ -149,12 +168,18 @@ router.post('/create', roleMiddleware(['ADMIN']), (req: Request, res: Response) 
  *               name:
  *                 type: string
  *                 example: "Mathematics"
- *               hours:
+ *               lectureHours:
  *                 type: number
+ *                 description: The number of lectureHours allocated for the subject.
+ *                 example: 40
+ *               practiceHours:
+ *                 type: number
+ *                 description: The number of practiceHours allocated for the subject.
  *                 example: 40
  *             required:
  *               - name
- *               - hours
+ *               - lectureHours
+ *               - practiceHours
  *     responses:
  *       200:
  *         description: Subject updated successfully

@@ -32,6 +32,7 @@ export class WorkloadRepository implements IWorkloadRepository {
             teacherId: workloadCreateDTO.teacherId,
             subjectId: workloadCreateDTO.subjectId,
             groupNumber: workloadCreateDTO.groupNumber,
+            year: workloadCreateDTO.year
 
         });
 
@@ -43,8 +44,8 @@ export class WorkloadRepository implements IWorkloadRepository {
     async Update(id: Types.ObjectId, workloadUpdateDTO: WorkloadUpdateDTO): Promise<Types.ObjectId> {
         const updatedWorkload = await Workload.findByIdAndUpdate(
             id,
-            { $set: workloadUpdateDTO },  // Оновлюємо лише ті поля, що передані
-            { new: true }  // Повертаємо оновлений документ
+            { $set: workloadUpdateDTO },
+            { new: true }
         );
 
         if (!updatedWorkload) throw new Error('Workload not found');
@@ -62,8 +63,8 @@ export class WorkloadRepository implements IWorkloadRepository {
     async DeleteById(id: Types.ObjectId): Promise<Types.ObjectId> {
         const deletedWorkload = await Workload.findByIdAndDelete(id);
 
-        if (!deletedWorkload) throw new Error('workload not found');  // Якщо не знайдений об'єкт, кидаємо помилку
+        if (!deletedWorkload) throw new Error('workload not found');
 
-        return deletedWorkload._id as Types.ObjectId;  // Повертаємо id видаленого документа
+        return deletedWorkload._id as Types.ObjectId;
     }
 }

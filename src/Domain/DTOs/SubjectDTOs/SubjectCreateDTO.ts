@@ -1,4 +1,5 @@
 export type SubjectCreateDTO = {
     name: string;
-    hours: number;
+    lectureHours: number,
+    practiceHours: number,
 };

@@ -18,7 +18,6 @@ import {UserModel} from "../../Domain/Models/UserModel";
 import {IUserResponse} from "../Contracts/IUserResponse";
 import dotenv from "dotenv";
 import {Workload} from "../../DataAccess/Schemas/Workload";
-import {IWorkload} from "../Contracts/IWorkload";
 import {IExtendedWorkloadResponse} from "../Contracts/IExtendedWorkloadResponse";
 
 dotenv.config();
@@ -126,7 +125,10 @@ class AuthController {
                 subjectId: {
                     id: workload.subject._id,
                     name: workload.subject.name,
-                    hours: workload.subject.hours
+                    lectureHours: workload.subject.lectureHours,
+                    practiceHours: workload.subject.practiceHours,
+                    totalHours: workload.subject.totalHours,
+
                 },
                 groupNumber: workload.groupNumber
             }));

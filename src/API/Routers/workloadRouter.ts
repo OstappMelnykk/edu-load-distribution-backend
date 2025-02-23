@@ -33,6 +33,8 @@ const router = express.Router();
 *                     type: string
 *                   groupNumber:
 *                     type: string
+*                   year:
+*                      type: number
 *       401:
 *          description: Unauthorized
 *       500:
@@ -73,6 +75,8 @@ router.get('/get', roleMiddleware(['ADMIN', 'USER']), (req: Request, res: Respon
  *                   type: string
  *                 groupNumber:
  *                   type: string
+ *                 year:
+ *                   type: number
  *       401:
  *         description: Unauthorized
  *       404:
@@ -105,10 +109,13 @@ router.get('/get/:id', roleMiddleware(['ADMIN', 'USER']), (req: Request, res: Re
  *                 type: string
  *               groupNumber:
  *                 type: string
+ *               year:
+ *                 type: number
  *             required:
  *               - teacherId
  *               - subjectId
  *               - groupNumber
+ *               - year
  *     responses:
  *       201:
  *         description: Workload created successfully
@@ -156,6 +163,8 @@ router.post('/create', roleMiddleware(['ADMIN', 'USER']), (req: Request, res: Re
  *                 type: string
  *               groupNumber:
  *                 type: string
+ *               year:
+ *                 type: number
  *     responses:
  *       200:
  *         description: Workload updated successfully

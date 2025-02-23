@@ -9,7 +9,9 @@ export class SubjectMapper {
         const { instance, error } = SubjectModel.Create(
             subjectEntity._id as Types.ObjectId,
             subjectEntity.name,
-            subjectEntity.hours
+            subjectEntity.lectureHours,
+            subjectEntity.practiceHours,
+            subjectEntity.totalHours
         );
 
         if (error) throw new Error(error);
@@ -21,7 +23,9 @@ export class SubjectMapper {
         return {
             _id: subjectModel.id,
             name: subjectModel.name,
-            hours: subjectModel.hours
+            lectureHours: subjectModel.lectureHours,
+            practiceHours: subjectModel.practiceHours,
+            totalHours: subjectModel.totalHours,
         } as ISubjectEntity;
     }
 

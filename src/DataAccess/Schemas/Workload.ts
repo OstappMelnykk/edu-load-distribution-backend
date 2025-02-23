@@ -1,4 +1,4 @@
-import { Schema, model, Types } from 'mongoose';
+import { Schema, model } from 'mongoose';
 import {IWorkloadEntity} from "../Entities/IWorkloadEntity";
 
 
@@ -18,6 +18,12 @@ const WorkloadSchema = new Schema<IWorkloadEntity>({
         required: true,
         minlength: 1,
         maxlength: 20
+    },
+    year: {
+        type: Number,
+        required: true,
+        min: 1950,
+        max: 2025,
     }
 });
 

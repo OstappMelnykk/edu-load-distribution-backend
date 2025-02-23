@@ -24,7 +24,9 @@ export class SubjectController {
             var responce: ISubjectResponse[] = subjects.map(subject => ({
                 id: subject.id,
                 name: subject.name,
-                hours: subject.hours
+                lectureHours: subject.lectureHours,
+                practiceHours: subject.practiceHours,
+                totalHours: subject.totalHours,
             }));
 
             res.send(responce);
@@ -45,7 +47,9 @@ export class SubjectController {
             const response: ISubjectResponse = {
                 id: subject.id,
                 name: subject.name,
-                hours: subject.hours
+                lectureHours: subject.lectureHours,
+                practiceHours: subject.practiceHours,
+                totalHours: subject.totalHours,
             };
             res.send(response);
         } catch (error) {

@@ -1,4 +1,4 @@
-import { Schema, model, Types } from 'mongoose';
+import { Schema, model } from 'mongoose';
 import {ITeacherEntity} from "../Entities/ITeacherEntity";
 
 const TeacherSchema = new Schema<ITeacherEntity>({

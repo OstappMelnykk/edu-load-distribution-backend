@@ -121,7 +121,9 @@ class TeacherController {
                 subjectId: {
                     id: workload.subject._id,
                     name: workload.subject.name,
-                    hours: workload.subject.hours
+                    lectureHours: workload.subject.lectureHours,
+                    practiceHours: workload.subject.practiceHours,
+                    totalHours: workload.subject.totalHours,
                 },
                 groupNumber: workload.groupNumber
             }));
