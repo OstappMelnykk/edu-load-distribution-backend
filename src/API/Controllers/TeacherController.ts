@@ -7,7 +7,6 @@ import {Types} from "mongoose";
 import {TeacherUpdateDTO} from "../../Domain/DTOs/TeacherDTOs/TeacherUpdateDTO";
 import {TeacherCreateDTO} from "../../Domain/DTOs/TeacherDTOs/TeacherCreateDTO";
 import {ITeacherService} from "../../Domain/Abstractions/Services/ITeacherService";
-import {IWorkload} from "../Contracts/IWorkload";
 import {Workload} from "../../DataAccess/Schemas/Workload";
 import {IExtendedWorkloadResponse} from "../Contracts/IExtendedWorkloadResponse";
 
@@ -69,7 +68,7 @@ class TeacherController {
     public async getTeacherByIdWorkloads(req: Request, res: Response) {
         const { id } = req.params;
         try {
-            const workloads: IWorkload[] = await Workload.aggregate([
+            const workloads = await Workload.aggregate([
                 {
                     $match: {
                         teacherId: new Types.ObjectId(id)
@@ -80,41 +79,49 @@ class TeacherController {
                         from: 'teachers',
                         localField: 'teacherId',
                         foreignField: '_id',
-                        as: 'teacherId'
+                        as: 'teacher'
                     }
+                },
+                {
+                    $unwind: { path: '$teacher', preserveNullAndEmptyArrays: true }
                 },
                 {
                     $lookup: {
                         from: 'subjects',
                         localField: 'subjectId',
                         foreignField: '_id',
-                        as: 'subjectId'
+                        as: 'subject'
                     }
                 },
                 {
-                    $unwind: '$teacherId'
+                    $addFields: {
+                        subjectId: { $toObjectId: "$subjectId" }
+                    }
                 },
                 {
-                    $unwind: '$subjectId'
+                    $unwind: { path: '$subject', preserveNullAndEmptyArrays: true }
                 }
+
             ]).exec();
+
+            console.log(workloads)
 
 
             const response: IExtendedWorkloadResponse[] = workloads.map((workload) => ({
                 id: workload._id,
                 teacherId: {
-                    id: workload.teacherId._id,
-                    firstName: workload.teacherId.firstName,
-                    lastName: workload.teacherId.lastName,
-                    middleName: workload.teacherId.middleName,
-                    degree: workload.teacherId.degree,
-                    position: workload.teacherId.position,
-                    experience: workload.teacherId.experience
+                    id: workload.teacher._id,
+                    firstName: workload.teacher.firstName,
+                    lastName: workload.teacher.lastName,
+                    middleName: workload.teacher.middleName,
+                    degree: workload.teacher.degree,
+                    position: workload.teacher.position,
+                    experience: workload.teacher.experience
                 },
                 subjectId: {
-                    id: workload.subjectId._id,
-                    name: workload.subjectId.name,
-                    hours: workload.subjectId.hours
+                    id: workload.subject._id,
+                    name: workload.subject.name,
+                    hours: workload.subject.hours
                 },
                 groupNumber: workload.groupNumber
             }));
