@@ -130,7 +130,8 @@ class AuthController {
                     totalHours: workload.subject.totalHours,
 
                 },
-                groupNumber: workload.groupNumber
+                groupNumber: workload.groupNumber,
+                year: workload.year,
             }));
 
 

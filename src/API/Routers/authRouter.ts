@@ -107,6 +107,9 @@ router.get('/get', roleMiddleware(['USER', 'ADMIN']), (req, res) => {
  *                   groupNumber:
  *                     type: string
  *                     description: The group number associated with the workload.
+ *                   year:
+ *                     type: number
+ *                     description: The group number associated with the workload.
  *       400:
  *         description: Error retrieving workloads for the current user.
  *       401:

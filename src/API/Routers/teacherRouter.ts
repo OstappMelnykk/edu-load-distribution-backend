@@ -176,6 +176,8 @@ router.get('/get/:id', roleMiddleware(['ADMIN', 'USER']), (req: Request, res: Re
  *                   groupNumber:
  *                     type: string
  *                     description: The group number associated with the workload.
+ *                   year:
+ *                     type: number
  *       401:
  *         description: Unauthorized
  *       404:
